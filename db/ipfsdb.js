@@ -1,17 +1,22 @@
-const IPFS = require('ipfs-api');
-const ipfs = new IPFS({ host: 'ipfs.infura.io', port: 5001, protocol: 'https' });
+import pycurl
+import certifi
+from io import BytesIO
 
-function FindItemByHash(IDHash)
-{
-    var address = 'https://ipfs.infura.io:5001/api/v0/get?arg=${IDHash}';
-    var result  = ipfs.get(address);
-    return result;
-}
+c = pycurl.Curl()
+#因为我本地的vpn转发端口在1080，可更换
+c.setopt(pycurl.PROXY,'127.0.0.1:1080')
+c.setopt(pycurl.CAINFO, certifi.where())
 
-function Add(Data)
-{
-    var object = ipfs.add(Data);
-    return object[Hash];
-}
+def get(DataHash):
+    url = f'https://ipfs.infura.io:5001/api/v0/get?arg={DataHash}&archive=true'
+    c.setopt(pycurl.URL, url)
+    try:
+        re =  c.perform()
+    except:
+        return null
+    return  re
 
 
+
+if __name__ == '__main__':
+    print(get('QmZtmD2qt6fJot32nabSP3CUjicnypEBz7bHVDhPQt9aAy')) 
