@@ -96,6 +96,30 @@ export const constantRoutes = [
     ]
   },
   {
+    path: '/trace',
+    component: Layout,
+    redirect: '/table/complex-table',
+    name: 'Table',
+    meta: {
+      title: '溯源查询',
+      icon: 'table'
+    },
+    children: [
+      {
+        path: 'trace-table',
+        component: () => import('@/views/table/trace-table'),
+        name: 'TraceTable',
+        meta: { title: '溯源查询' }
+      },
+      {
+        path: 'trace-form',
+        component: () => import('@/views/table/trace-form'),
+        name: 'TraceForm',
+        meta: { title: '添加物品' }
+      }
+    ]
+  },
+  {
     path: '/guide',
     component: Layout,
     redirect: '/guide/index',

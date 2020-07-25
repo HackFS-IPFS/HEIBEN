@@ -6,3 +6,5 @@
 
 
 frontEnd/node_modules
+.idea/
+venv
