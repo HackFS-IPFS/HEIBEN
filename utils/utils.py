@@ -50,8 +50,3 @@ def get_sol():
     cfg.read("../contract/eth.sol")
     print(cfg.sections())
 
-
-print(encrypt("59beee1423882745bfa286caa3603f24661e50a3905f86ca4b15f63440ab3d3d"))
-print(
-    decrypt("08fd6afb129725f3a7a2e220f006d5d4d2c5ce3adaa2f486a4a5e3bfe4c5cda6a00077c0be1ae678aa51724fe18728416db8ecbf686d8a24fd6b704c5e376d1b")
-)
