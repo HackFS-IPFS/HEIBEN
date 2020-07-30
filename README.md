@@ -1,5 +1,5 @@
 # HEIBEN
-item traceability system based on ipfs and eth2
+item traceability system based on ipfs and eth
 ## front-end
 deploy the website:
 ```$xslt
