@@ -2,6 +2,7 @@ from configparser import ConfigParser
 import os
 from Crypto.Cipher import AES
 from binascii import b2a_hex, a2b_hex
+from solc import compile_standard
 
 
 def add_to_16(text):
@@ -45,8 +46,31 @@ def get_context():
     return w3, my
 
 
-def get_sol():
-    cfg = ConfigParser()
-    cfg.read("../contract/eth.sol")
-    print(cfg.sections())
+def get_compiled_contract():
+    sol_name = "hackfs"
+    with open(os.path.dirname(os.getcwd()) + "\contract\eth.sol", "r", encoding="utf-8") as f:  # 设置文件对象
+        source = f.read()
+    # sol should like this
+    sol = {
+        "name": "eth.sol",
+        "body": source
+    }
+    compiled_sol = compile_standard({
+        "language": "Solidity",
+        "sources": {
+            sol.get("name"): {
+                "content": sol.get("body")
+            }
+        },
+        "settings": {
+            "outputSelection": {
+                "*": {
+                    "*": ["metadata", "evm.bytecode", "evm.bytecode.sourceMap"]
+                }
+            }
+        }
+    })
+    return compiled_sol
 
+
+print(get_compiled_contract())
