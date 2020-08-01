@@ -11,13 +11,14 @@ input:  Hash:String
 output: Content:Json
 '''
 def get(Hash):
-
+    url = f"https://ipfs.infura.io:5001/api/v0/cat?arg={Hash}"
     try:
-        re=requests.get("https://ipfs.infura.io:5001/api/v0/cat?arg={Hash}",proxies=proxies)
+        re=requests.get(url,proxies=proxies)
     except:
         return 0
-
-    return re.content.json()
+    
+    a = str(re.content,'utf-8')
+    return json.loads(a)
 
 '''
 This function upload file required by the file path and return the file hash
@@ -52,7 +53,7 @@ def addContent(Data):
     return json.loads(str(p.content,'utf-8'))['Hash']
    
 if __name__ == '__main__':
-    addr=addContentbyPath('formatExample.json')
+    addr = addContentbyPath('1.json')
     print(addr)
     # QmSwgaHvNLxNGdrNsGqWcLViFFYep6WsnN8h1HYrxMxhcS
     print(get(addr))
