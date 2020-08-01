@@ -26,7 +26,7 @@ def encrypt(text):
 
 
 def decrypt(text):
-    key = 'your key'.encode('utf-8')
+    key = '9999999999999999'.encode('utf-8')
     iv = b'qqqqqqqqqqqqqqqq'
     mode = AES.MODE_CBC
     cryptos = AES.new(key, mode, iv)

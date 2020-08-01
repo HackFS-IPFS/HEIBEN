@@ -7,3 +7,8 @@ cd frontEnd
 cnpm install
 npm run dev(or "npm run build")
 ```
+## back-end
+1. install Solidity(v0.4.25)
+```
+npm install -g solc@0.4.25
+```

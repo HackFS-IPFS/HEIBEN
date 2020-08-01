@@ -1,0 +1,10 @@
+{
+  "productID": "Example",
+  "productName": "productNameExample",
+  "companyName": "companyNameExample",
+  "productionDate": "2010-01-01",
+  "materialsID": [
+    "material1",
+    "material2"
+  ]
+}
