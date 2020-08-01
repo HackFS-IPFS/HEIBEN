@@ -124,13 +124,18 @@ class Ethereum:
 """
 
 # 实例化对象
-ethereum = Ethereum()
-# 初始化合约对象
-ethereum.get_contract_instance("0x8d592ad6DA67C3FdDe95a3cD8c33441F29C39836")
+# ethereum = Ethereum()
+# # 初始化合约对象
+# ethereum.get_contract_instance("0x8d592ad6DA67C3FdDe95a3cD8c33441F29C39836")
 
 # 合约存入新哈希
 # print(ethereum.newHash("0x8d592ad6DA67C3FdDe95a3cD8c33441F29C39836"))
 # 建立新关系
 # print(ethereum.newRelation("123", "0x8d592ad6DA67C3FdDe95a3cD8c33441F29C39836"))
 # 打印0x8d592ad6DA67C3FdDe95a3cD8c33441F29C39836
-print(ethereum.getHash("123"))
+# 例子
+ethereum = Ethereum()
+ethereum.get_contract_instance("0x8d592ad6DA67C3FdDe95a3cD8c33441F29C39836")
+ethereum.newHash("IPFSAddressExample")
+ethereum.newRelation("oneExample", "IPFSAddressExample")
+print(ethereum.getHash("oneExample"))

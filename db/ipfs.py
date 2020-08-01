@@ -52,4 +52,7 @@ def addContent(Data):
     return json.loads(str(p.content,'utf-8'))['Hash']
    
 if __name__ == '__main__':
-    addContentbyPath('D:\\1.json')
+    addr=addContentbyPath('formatExample.json')
+    print(addr)
+    # QmSwgaHvNLxNGdrNsGqWcLViFFYep6WsnN8h1HYrxMxhcS
+    print(get(addr))
