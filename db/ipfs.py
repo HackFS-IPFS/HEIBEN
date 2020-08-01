@@ -13,7 +13,7 @@ output: Content:Json
 def get(Hash):
 
     try:
-        re=requests.get("https://ipfs.infura.io:5001/api/v0/cat?{Hash}",proxies=proxies)
+        re=requests.get("https://ipfs.infura.io:5001/api/v0/cat?arg={Hash}",proxies=proxies)
     except:
         return 0
 
