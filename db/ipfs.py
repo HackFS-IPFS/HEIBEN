@@ -2,8 +2,8 @@ import requests
 import json
 # import pycurl
 proxies = {
-    "http": "http://127.0.0.1:1080",
-    "https": "127.0.0.1:1080",
+    "http": "http://127.0.0.1:8000",
+    "https": "127.0.0.1:8000",
 }
 '''
 this function search hash in IPFS network and return the content required by hash

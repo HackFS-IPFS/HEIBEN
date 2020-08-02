@@ -37,7 +37,7 @@ def decrypt(text):
 # os.getcwd()
 def get_context():
     cfg = ConfigParser()
-    cfg.read("config.ini")
+    cfg.read("./config.ini")
     os.environ["WEB3_INFURA_PROJECT_ID"] = cfg.get("init", "WEB3_INFURA_PROJECT_ID")
     os.environ["WEB3_INFURA_API_SECRET"] = cfg.get("init", "WEB3_INFURA_API_SECRET")
     os.environ["WEB3_PROVIDER_URI"] = cfg.get("init", "WEB3_PROVIDER_URI")

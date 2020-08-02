@@ -134,8 +134,9 @@ class Ethereum:
 # print(ethereum.newRelation("123", "0x8d592ad6DA67C3FdDe95a3cD8c33441F29C39836"))
 # 打印0x8d592ad6DA67C3FdDe95a3cD8c33441F29C39836
 # 例子
-ethereum = Ethereum()
-ethereum.get_contract_instance("0x8d592ad6DA67C3FdDe95a3cD8c33441F29C39836")
-ethereum.newHash("IPFSAddressExample")
-ethereum.newRelation("oneExample", "IPFSAddressExample")
-print(ethereum.getHash("oneExample"))
+if __name__ == "__main__":
+    ethereum = Ethereum()
+    ethereum.get_contract_instance("0x8d592ad6DA67C3FdDe95a3cD8c33441F29C39836")
+    ethereum.newHash("IPFSAddressExample")
+    ethereum.newRelation("oneExample", "IPFSAddressExample")
+    print(ethereum.getHash("oneExample"))

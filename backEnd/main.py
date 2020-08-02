@@ -37,12 +37,15 @@ def addById():
     response:Response = make_response("default Response")
     newData:dict = json.loads(request.get_data())
     if "productID" in newData.keys():
+        productID = newData["productID"]
         ethereum = Ethereum()
-        ethereum.get_contract_instance("0x8d592ad6DA67C3FdDe95a3cD8c33441F29C39836")
+        ethereum.getHash(productID)
+        # ethereum.get_contract_instance("0x8d592ad6DA67C3FdDe95a3cD8c33441F29C39836")
+        # ethereum.newHash("IPFSAddressExample")
+        # ethereum.newRelation("oneExample", "IPFSAddressExample")
     else:
         response = make_response("JSON should contain productID")
-    #
-    print(ethereum.newHash(ipfsAddress))
+    # print(ethereum.newHash(ipfsAddress))
     # # 建立新关系
     # print(ethereum.newRelation("123", ipfsAddres
     # s))
@@ -50,4 +53,5 @@ def addById():
     return response
 
 if __name__ == "__main__":
-    app.run(debug = True)
+    # app.run(debug = True)
+    ethereum = Ethereum()
