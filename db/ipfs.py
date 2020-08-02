@@ -11,6 +11,7 @@ input:  Hash:String
 output: Content:Json
 '''
 def get(Hash):
+
     url = f"https://ipfs.infura.io:5001/api/v0/cat?arg={Hash}"
     try:
         re=requests.get(url,proxies=proxies)
@@ -52,8 +53,60 @@ def addContent(Data):
         return 0
     return json.loads(str(p.content,'utf-8'))['Hash']
    
+
+
+class Content:
+    '''
+    if you want to add some content to ipfs, please give all agurment.
+    '''
+    def __init__(self,productID,productName,companyName,productionDate,materialsID):
+        self.productID=productID
+        self.productName = productName
+        self.companyName = companyName
+        self.productionDate = productionDate
+        self.materialsID = materialsID
+    '''
+
+    '''
+    def addtoIPFS(self):
+        url = f'https://ipfs.infura.io:5001/api/v0/add?pin=false'
+        # check companyName,productionData,productName and materialID is not null
+        if(not self.companyName or not self.productionDate or not self.productName or not self.productID):
+            raise NotImplementedError('the argument companyName,productionData,productName,productID is nessasary.')
+
+        content = {"productID":self.productID,"productName":self.productName,"companyName":self.companyName,"productionDate":self.productionDate,"materialsID":self.materialsID}
+        Data = {"upload":('db.json',str(content))}
+        try:
+            p=requests.post(url, files=Data)
+        except:
+            return 0   
+        return json.loads(str(p.content,'utf-8'))['Hash']
+    '''
+
+    '''
+    def get(self,ContentHash):
+        url = f"https://ipfs.infura.io:5001/api/v0/cat?arg={ContentHash}"
+        try:
+            re=requests.get(url,proxies=proxies)
+        except:
+            return 0
+    
+        a = json.loads(str(re.content,'utf-8').replace('\'','\"'))
+        self.productID=a['productID']
+        self.productionDate=a['productionDate']
+        self.productName = a['productName']
+        self.companyName = a['companyName']
+        self.materialsID = a['materialsID']
+        return self
+
 if __name__ == '__main__':
-    addr = addContentbyPath('1.json')
+    content = Content("Example","producNameExample","companyNameExample","2010-01-0",["material1","material2"])
+    addr = content.addtoIPFS()
     print(addr)
-    # QmSwgaHvNLxNGdrNsGqWcLViFFYep6WsnN8h1HYrxMxhcS
-    print(get(addr))
+    # QmUcgXXC473q6UiuyzpsutPs4T68tadkoJnXbpcj5EF4Vx
+    content_tmp = Content("","","","",[])
+    print(content_tmp.get('QmUcgXXC473q6UiuyzpsutPs4T68tadkoJnXbpcj5EF4Vx'))
+
+
+        
+        
