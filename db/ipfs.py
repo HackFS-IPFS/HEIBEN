@@ -65,6 +65,13 @@ class Content:
         self.companyName = companyName
         self.productionDate = productionDate
         self.materialsID = materialsID
+
+    def __init__(self,oriDict:dict):
+        self.productID=oriDict["productID"]
+        self.productName = oriDict["productName"]
+        self.companyName = oriDict["companyName"]
+        self.productionDate = oriDict["productionDate"]
+        self.materialsID = oriDict["materialsID"]
     '''
     this function is add content to the IPFS network by infura network
     input： content instance
@@ -84,11 +91,11 @@ class Content:
             return 0   
         return json.loads(str(p.content,'utf-8'))['Hash']
     '''
-    this function get content from ipfs from infura network
+    this function get content from ipfs from infura network and change the content itself
     input : ContentHash
     output : content
     '''
-    def get(self,ContentHash):
+    def change(self,ContentHash):
         url = f"https://ipfs.infura.io:5001/api/v0/cat?arg={ContentHash}"
         try:
             re=requests.get(url,proxies=proxies)
@@ -102,6 +109,21 @@ class Content:
         self.companyName = a['companyName']
         self.materialsID = a['materialsID']
         return self
+    '''
+    this function get content from ipfs from infura network and return the json as type dict
+    input : ContentHash
+    output : content
+    '''
+    @staticmethod
+    def get(ContentHash):
+        url = f"https://ipfs.infura.io:5001/api/v0/cat?arg={ContentHash}"
+        try:
+            re=requests.get(url,proxies=proxies)
+        except:
+            return 0
+
+        a = json.loads(str(re.content,'utf-8').replace('\'','\"'))
+        return a
 
 if __name__ == '__main__':
     content = Content("Example","producNameExample","companyNameExample","2010-01-0",["material1","material2"])
@@ -109,7 +131,7 @@ if __name__ == '__main__':
     print(addr)
     # QmUcgXXC473q6UiuyzpsutPs4T68tadkoJnXbpcj5EF4Vx
     content_tmp = Content("","","","",[])
-    print(content_tmp.get('QmUcgXXC473q6UiuyzpsutPs4T68tadkoJnXbpcj5EF4Vx'))
+    print(content_tmp.get(addr))
 
 
         

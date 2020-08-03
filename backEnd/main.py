@@ -1,57 +1,71 @@
 from flask import *
 from ethereum.ethereum import Ethereum
 import db.ipfs
+import traceback
 app = Flask(__name__)
-@app.route('/user/<username>')
-def show_user_profile(username):
-    # show the user profile for that user
-    return 'User %s' % username
 
-@app.route('/post/<int:post_id>')
-def show_post(post_id):
-    # show the post with the given id, the id is an integer
-    return 'Post %d' % post_id
-
-@app.route('/path/<path:subpath>')
-def show_subpath(subpath):
-    # show the subpath after /path/
-    return 'Subpath %s' % subpath
+'''
+this function read productID and return the correspondent items
+input: productID
+output: json of items
+(if the materials of one products doesn't exist, a json which only contains its ID will be returned. )
+'''
 
 @app.route('/api/trace/',methods=["GET"])
 def traceById():
     productID =  request.args.get("productID")
-    # show the subpath after /path/
-    # 实例化对象
+    result = []
+    if not isinstance(productID,str):
+        return make_response("argument productID should be str!",404)
+    productList = [productID]
     ethereum = Ethereum()
-    # 初始化合约对象
     ethereum.get_contract_instance("0x8d592ad6DA67C3FdDe95a3cD8c33441F29C39836")
-    ipfsAddress = ethereum.getHash(productID)
-    Itemsdata = db.ipfsdb.get(ipfsAddress)
-    print(Itemsdata)
-    response = make_response()
+    while len(productList) > 0:
+        curID = productList.pop()
+        ipfsAddress = ethereum.getHash(curID)
+        if ipfsAddress == "false":
+            print("curID "+curID+" is missing")
+            result.append({"productID":curID})
+            continue
+        print(ipfsAddress)
+        Itemdata = db.ipfs.Content.get(ipfsAddress)
+        for materialID in Itemdata["materialsID"]:
+            productList.insert(0,materialID)
+        result.append(Itemdata)
+    print(result)
+    if len(result)==1 and result[0].keys()==1:
+        response = make_response("The productID "+productID+"is not found",404)
+    else:
+        response = make_response(jsonify(result),200)
     return response
 
-
+'''
+this function accept the json file and upload it to the IPFS
+input: json of item
+output: error message and statues code
+'''
 @app.route('/api/add/',methods=["POST"])
 def addById():
-    response:Response = make_response("default Response")
     newData:dict = json.loads(request.get_data())
-    if "productID" in newData.keys():
-        productID = newData["productID"]
-        ethereum = Ethereum()
-        ethereum.getHash(productID)
-        # ethereum.get_contract_instance("0x8d592ad6DA67C3FdDe95a3cD8c33441F29C39836")
-        # ethereum.newHash("IPFSAddressExample")
-        # ethereum.newRelation("oneExample", "IPFSAddressExample")
-    else:
-        response = make_response("JSON should contain productID")
-    # print(ethereum.newHash(ipfsAddress))
-    # # 建立新关系
-    # print(ethereum.newRelation("123", ipfsAddres
-    # s))
+    content:db.ipfs.Content = None
+    try:
+        content = db.ipfs.Content(newData)
+    except Exception:
+        print(traceback.print_exc())
+        return make_response("format Error",404)
+    ipfsAddr = content.addtoIPFS()
+    if  not isinstance(ipfsAddr,str):
+        return make_response("Error when add to IPFS",404)
+    print("ipfsAddr has been added: ",ipfsAddr)
+    ethereum = Ethereum()
+    ethereum.get_contract_instance("0x8d592ad6DA67C3FdDe95a3cD8c33441F29C39836")
+    ethereum.newHash(ipfsAddr)
+    ethereum.newRelation(content.productID, ipfsAddr)
+    print(ethereum.getHash(content.productID)==ipfsAddr)
     # print(productID)
-    return response
+    # print(ethereum.getHash(productID))
+    # # 建立新关
+    return make_response("upload success",200)
 
 if __name__ == "__main__":
-    # app.run(debug = True)
-    ethereum = Ethereum()
+    app.run(debug = True)
