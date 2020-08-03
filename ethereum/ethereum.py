@@ -8,6 +8,8 @@ import json
     尤其是设计到和合约交互的部分，可能会由于gas limit等问题导致交互不成功，可根据返回的tx_receipt来查询trans具体状态
     前三个函数暂时用不到，主要使用和合约交互的后面几个函数就可以了
 """
+
+
 class Ethereum:
     def __init__(self):
         # 获取w3, my
@@ -70,10 +72,10 @@ class Ethereum:
 
     # 接下来的函数和合约函数一一对应，文档可以参考石墨
     def getHash(self, uuid):
-        try:
-            data = self.contract_instance.functions.getHash(uuid).call()
-        except exceptions.BadFunctionCallOutput:
-            return "no such uuid"
+        # try:
+        data = self.contract_instance.functions.getHash(uuid).call()
+        # except exceptions.BadFunctionCallOutput:
+        #     return "no such uuid"
         return data
 
     """
@@ -92,6 +94,8 @@ class Ethereum:
         return tx_receipt
 
     def updateHash(self, oldHashValue, newHashValue):
+        if oldHashValue == "false":
+            return "wrong value"
         cool_function = self.contract_instance.functions.updateHash(oldHashValue, newHashValue)
         trans = cool_function.buildTransaction(
             {'nonce': self.w3.eth.getTransactionCount(self.my.address), 'gas': 1000000, "from": self.my.address,
@@ -133,9 +137,11 @@ class Ethereum:
 # 建立新关系
 # print(ethereum.newRelation("123", "0x8d592ad6DA67C3FdDe95a3cD8c33441F29C39836"))
 # 打印0x8d592ad6DA67C3FdDe95a3cD8c33441F29C39836
+
 # 例子
-ethereum = Ethereum()
-ethereum.get_contract_instance("0x8d592ad6DA67C3FdDe95a3cD8c33441F29C39836")
-ethereum.newHash("IPFSAddressExample")
-ethereum.newRelation("oneExample", "IPFSAddressExample")
-print(ethereum.getHash("oneExample"))
+# ethereum = Ethereum()
+# ethereum.get_contract_instance("0x8d592ad6DA67C3FdDe95a3cD8c33441F29C39836")
+# ethereum.updateHash("1", "false")
+# ethereum.newHash("IPFSAddressExample")
+# ethereum.newRelation("oneExample", "IPFSAddressExample")
+# print(ethereum.getHash("fgdavz"))
