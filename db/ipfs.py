@@ -66,10 +66,12 @@ class Content:
         self.productionDate = productionDate
         self.materialsID = materialsID
     '''
-
+    this function is add content to the IPFS network by infura network
+    input： content instance
+    output : IPFS Hash
     '''
     def addtoIPFS(self):
-        url = f'https://ipfs.infura.io:5001/api/v0/add?pin=false'
+        url = f'https://ipfs.infura.io:5001/api/v0/add?pin=true'
         # check companyName,productionData,productName and materialID is not null
         if(not self.companyName or not self.productionDate or not self.productName or not self.productID):
             raise NotImplementedError('the argument companyName,productionData,productName,productID is nessasary.')
@@ -82,7 +84,9 @@ class Content:
             return 0   
         return json.loads(str(p.content,'utf-8'))['Hash']
     '''
-
+    this function get content from ipfs from infura network
+    input : ContentHash
+    output : content
     '''
     def get(self,ContentHash):
         url = f"https://ipfs.infura.io:5001/api/v0/cat?arg={ContentHash}"
