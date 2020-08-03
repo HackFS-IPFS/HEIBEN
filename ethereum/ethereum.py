@@ -8,6 +8,8 @@ import json
     尤其是设计到和合约交互的部分，可能会由于gas limit等问题导致交互不成功，可根据返回的tx_receipt来查询trans具体状态
     前三个函数暂时用不到，主要使用和合约交互的后面几个函数就可以了
 """
+
+
 class Ethereum:
     def __init__(self):
         # 获取w3, my
@@ -134,9 +136,8 @@ class Ethereum:
 # print(ethereum.newRelation("123", "0x8d592ad6DA67C3FdDe95a3cD8c33441F29C39836"))
 # 打印0x8d592ad6DA67C3FdDe95a3cD8c33441F29C39836
 # 例子
-if __name__ == "__main__":
-    ethereum = Ethereum()
-    ethereum.get_contract_instance("0x8d592ad6DA67C3FdDe95a3cD8c33441F29C39836")
-    ethereum.newHash("IPFSAddressExample")
-    ethereum.newRelation("oneExample", "IPFSAddressExample")
-    print(ethereum.getHash("oneExample"))
+# ethereum = Ethereum()
+# ethereum.get_contract_instance("0x8d592ad6DA67C3FdDe95a3cD8c33441F29C39836")
+# # ethereum.newHash("IPFSAddressExample")
+# # ethereum.newRelation("oneExample", "IPFSAddressExample")
+# print(ethereum.getHash("oneExample"))
