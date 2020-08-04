@@ -2,7 +2,9 @@ from flask import *
 from ethereum.ethereum import Ethereum
 import db.ipfs
 import traceback
+from flask_cors import CORS
 app = Flask(__name__)
+CORS(app, supports_credentials=True)
 
 '''
 this function read productID and return the correspondent items

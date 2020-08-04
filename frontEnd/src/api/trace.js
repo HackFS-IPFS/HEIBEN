@@ -1,41 +1,20 @@
 import request from '@/utils/request'
 
-export function fetchList(query) {
-  return request({
-    url: '/vue-element-admin/article/list',
-    method: 'get',
-    params: query
-  })
-}
-
-export function fetchProduct(id) {
+export function fetchProduct(productID) {
   return request({
     url: '/api/trace/',
-    method: 'get',
-    params: { id }
+    // baseURL: process.env.VUE_APP_BASE_API2,
+    baseURL: 'http://127.0.0.1:5000',
+    method: 'GET',
+    params: { productID }
   })
 }
 
-export function fetchPv(pv) {
+export function createProduct(data) {
   return request({
-    url: '/vue-element-admin/article/pv',
-    method: 'get',
-    params: { pv }
-  })
-}
-
-export function createArticle(data) {
-  return request({
-    url: '/vue-element-admin/article/create',
-    method: 'post',
-    data
-  })
-}
-
-export function updateArticle(data) {
-  return request({
-    url: '/vue-element-admin/article/update',
-    method: 'post',
+    url: '/api/add/',
+    baseURL: 'http://127.0.0.1:5000',
+    method: 'POST',
     data
   })
 }

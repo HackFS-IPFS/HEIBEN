@@ -98,7 +98,7 @@ export const constantRoutes = [
   {
     path: '/trace',
     component: Layout,
-    redirect: '/table/complex-table',
+    redirect: '/trace/trace-table',
     name: 'Table',
     meta: {
       title: '溯源查询',
@@ -107,13 +107,13 @@ export const constantRoutes = [
     children: [
       {
         path: 'trace-table',
-        component: () => import('@/views/table/trace-table'),
+        component: () => import('@/views/trace/trace-table'),
         name: 'TraceTable',
         meta: { title: '溯源查询' }
       },
       {
         path: 'trace-form',
-        component: () => import('@/views/table/trace-form'),
+        component: () => import('@/views/trace/trace-form'),
         name: 'TraceForm',
         meta: { title: '添加物品' }
       }
