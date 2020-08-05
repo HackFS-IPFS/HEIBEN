@@ -7,6 +7,7 @@ from flask import render_template #引入模板插件
 
 app = Flask(__name__, static_folder='../frontEnd/dist/static',  #设置静态文件夹目录
 template_folder = "../frontEnd/dist")
+
 CORS(app, supports_credentials=True)
 
 @app.route('/')
