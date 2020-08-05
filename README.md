@@ -12,3 +12,4 @@ npm run dev(or "npm run build")
 ```
 npm install -g solc@0.4.25
 ```
+2. use --proxyPort to specify the port of proxy

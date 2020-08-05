@@ -1,5 +1,6 @@
 import sys
 import os
+import getopt
 curPath = os.path.abspath(os.path.dirname(__file__))
 rootPath = os.path.split(curPath)[0]
 sys.path.append(rootPath)
@@ -128,4 +129,9 @@ def addById():
 
 
 if __name__ == "__main__":
+    opts, args = getopt.getopt(sys.argv[1:], "h", ["help", "proxyPort="])#"ho:"也可以写成'-h-o:'
+    for o,a in opts:
+        if(o == "--proxyPort"):
+            db.ipfs.proxies = {"http": "http://127.0.0.1:"+str(a)}
+    print(db.ipfs.proxies)
     app.run(debug=True)
