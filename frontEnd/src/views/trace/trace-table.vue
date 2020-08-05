@@ -23,7 +23,7 @@
         type="primary"
         icon="el-icon-s-data"
         @click="showTraceChart"
-      >查看图示</el-button>
+      >trace-chain visualization</el-button>
 
       <!-- <el-input
         v-model="listQuery.title"
@@ -60,29 +60,29 @@
       highlight-current-row
       style="width: 100%;"
     >
-      <el-table-column label="产品编号" prop="id" sortable="custom" align="center" width="80">
+      <el-table-column label="Product ID" prop="id" sortable="custom" align="center" width="100">
         <template slot-scope="{row}">
           <span>{{ row.productID }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="生产日期" width="150px" align="center">
+      <el-table-column label="Production Date" width="150px" align="center">
         <template slot-scope="{row}">
           <span>{{ row.productionDate | parseTime('{y}-{m}-{d} {h}:{i}') }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="产品名称" min-width="150px">
+      <el-table-column label="Product Name" min-width="150px">
         <template slot-scope="{row}">
           <span>{{ row.productName }}</span>
           <!--          <el-tag>{{ row.type | typeFilter }}</el-tag>-->
         </template>
       </el-table-column>
-      <el-table-column label="加工厂商" min-width="150px">
+      <el-table-column label="Manufacturer" min-width="150px">
         <template slot-scope="{row}">
           <span>{{ row.companyName }}</span>
           <!--          <el-tag>{{ row.type | typeFilter }}</el-tag>-->
         </template>
       </el-table-column>
-      <el-table-column label="原材料编号" min-width="150px">
+      <el-table-column label="Material ID" min-width="150px">
         <template slot-scope="{row}">
           <span>{{ row.materialID }}</span>
           <!--          <el-tag>{{ row.type | typeFilter }}</el-tag>-->

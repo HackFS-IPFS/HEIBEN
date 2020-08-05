@@ -109,7 +109,7 @@ export const constantRoutes = [
         path: '/trace-table',
         component: () => import('@/views/trace/trace-table'),
         name: 'TraceTable',
-        meta: { title: '溯源查询', icon: 'table' }
+        meta: { title: 'Trace item', icon: 'table' }
       }
       // {
       //   path: 'trace-form',
@@ -139,7 +139,7 @@ export const constantRoutes = [
         path: '/trace-form',
         component: () => import('@/views/trace/trace-form'),
         name: 'TraceForm',
-        meta: { title: '添加物品', icon: 'table' }
+        meta: { title: 'Add item', icon: 'table' }
       }
     ]
   }

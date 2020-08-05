@@ -5,25 +5,25 @@
       :rules="rules"
       :model="temp"
       label-position="left"
-      label-width="100px"
+      label-width="150px"
       style="width: 400px; margin-left:50px;"
     >
-      <el-form-item label="产品ID" prop="productID">
+      <el-form-item label="Product ID" prop="productID">
         <el-input v-model="temp.productID" />
       </el-form-item>
-      <el-form-item label="产品名称" prop="productName">
+      <el-form-item label="Product Name" prop="productName">
         <el-input v-model="temp.productName" />
       </el-form-item>
-      <el-form-item label="生产日期" prop="productionDate">
+      <el-form-item label="Production Date" prop="productionDate">
         <el-date-picker v-model="temp.productionDate" type="date" placeholder="Please pick a date" />
       </el-form-item>
-      <el-form-item label="加工厂商" prop="companyName">
+      <el-form-item label="Manufacturer" prop="companyName">
         <el-input v-model="temp.companyName" />
       </el-form-item>
       <!--      <el-input v-for="(item, index) in formerItemsObj" :key="index" v-model="formerItemsObj[index].value" />-->
       <span v-for="(item, index) in temp.materialsID" :key="index">
         <el-form-item>
-          <span slot="label">原材料{{ index+1 }} ID</span>
+          <span slot="label">Material{{ index+1 }} ID</span>
           <el-input v-model="temp.materialsID[index]" placeholder="原材料编号" />
           <el-button
             size="mini"
@@ -31,7 +31,7 @@
             plain
             icon="el-icon-delete"
             @click="deleteListObjItem"
-          >删除此原材料</el-button>
+          >Delete Material</el-button>
         </el-form-item>
         <!-- <el-form-item>
           <span slot="label">原材料名称</span>
@@ -49,12 +49,12 @@
           plain
           icon="el-icon-plus"
           @click="addListObjItem"
-        >添加原材料</el-button>
+        >Add Material</el-button>
       </el-form-item>
     </el-form>
     <div slot="footer" class="dialog-footer">
-      <el-button @click="dialogFormVisible = false">取消</el-button>
-      <el-button type="primary" @click="createData()">添加</el-button>
+      <el-button @click="dialogFormVisible = false">CANCEL</el-button>
+      <el-button type="primary" @click="createData()">ADD</el-button>
     </div>
 
     <el-dialog :visible.sync="dialogPvVisible" title="Reading statistics">
