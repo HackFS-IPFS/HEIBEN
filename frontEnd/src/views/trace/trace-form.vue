@@ -25,7 +25,7 @@
       <span v-for="(item, index) in temp.materialsID" :key="index">
         <el-form-item>
           <span slot="label">Material{{ index+1 }} ID</span>
-          <el-input v-model="temp.materialsID[index]" placeholder="原材料编号" />
+          <el-input v-model="temp.materialsID[index]" placeholder="Material ID" />
           <el-button
             size="mini"
             class="button"
@@ -131,16 +131,16 @@ export default {
       pvData: [],
       rules: {
         productID: [
-          { required: true, message: '请输入产品ID', trigger: 'change' }
+          { required: true, message: 'Please input product ID', trigger: 'change' }
         ],
         productName: [
-          { required: true, message: '请输入产品名称', trigger: 'change' }
+          { required: true, message: 'Please input product name', trigger: 'change' }
         ],
         productionDate: [
-          { required: true, message: '请选择生产日期', trigger: 'change' }
+          { required: true, message: 'Please input production date', trigger: 'change' }
         ],
         companyName: [
-          { required: true, message: '请输入生产厂家', trigger: 'change' }
+          { required: true, message: 'Please input company name', trigger: 'change' }
         ]
       },
       downloadLoading: false
