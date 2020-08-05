@@ -4,6 +4,7 @@
       ref="dataForm"
       :rules="rules"
       :model="temp"
+      :v-loading="loading"
       label-position="left"
       label-width="100px"
       style="width: 400px; margin-left:50px;"
@@ -96,6 +97,7 @@ export default {
       tableKey: 0,
       list: null,
       total: 0,
+      loading: false,
       listLoading: true,
       listQuery: {
         page: 1,
@@ -176,9 +178,13 @@ export default {
       // axios.post('http://127.0.0.1:5000/api/add/', this.temp).then(res => {
       //   console.log(res)
       // })
-
+      // this.loading = true
+      const loading = this.$loading({
+        lock: true
+      })
       createProduct(this.temp).then(() => {
         // this.list.unshift(this.temp)
+        loading.close()
         this.$notify({
           title: 'Success',
           message: 'Created Successfully',
@@ -186,6 +192,7 @@ export default {
           duration: 2000
         })
       })
+      // this.loading = false
 
       // this.$refs['dataForm'].validate(valid => {
       //   if (valid) {

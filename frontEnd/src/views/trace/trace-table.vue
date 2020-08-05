@@ -67,7 +67,8 @@
       </el-table-column>
       <el-table-column label="生产日期" width="150px" align="center">
         <template slot-scope="{row}">
-          <span>{{ row.productionDate | parseTime('{y}-{m}-{d} {h}:{i}') }}</span>
+          <span>{{ row.productionDate }}</span>
+          <!-- <span>{{ row.productionDate | parseTime('{y}-{m}-{d} {h}:{i}') }}</span> -->
         </template>
       </el-table-column>
       <el-table-column label="产品名称" min-width="150px">
@@ -99,7 +100,7 @@
     />-->
 
     <el-dialog :visible.sync="dialogVisible" width="90%">
-      <trace-chart-component :data="rawList" :rootid="rootID" />
+      <trace-chart-component ref="traceChart" :data="rawList" :rootid="rootID" />
       <span slot="footer" class="dialog-footer">
         <el-button @click="dialogVisible = false">取 消</el-button>
         <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
@@ -148,6 +149,7 @@ export default {
     return {
       idToSearch: '',
       tableKey: 0,
+      hasRendered: false,
       rootID: '',
       dialogVisible: false,
       list: null,
@@ -214,6 +216,7 @@ export default {
   },
   methods: {
     async runGetData() {
+      this.hasRendered = false
       this.rootID = this.idToSearch
       console.log(this.idToSearch)
       await this.getData(this.rootID)
@@ -225,10 +228,10 @@ export default {
       //     productID: 'zcx-test-000',
       //     productName: 'productNameExample1',
       //     companyName: 'companyNameExample1',
-      //     productionDate: '2010-01-01',
+      //     productionDate: '2010-01-01',7
       //     materialsID: [
       //       'zcx-test-004',
-      //       'zcx-test-007',
+      //       'zcx-test-00',
       //       'zcx-test-002',
       //       'zcx-test-003'
       //     ]
@@ -288,6 +291,12 @@ export default {
       fetchProduct(rootID).then(response => {
         this.listLoading = false
         console.log('response =', response)
+        console.log(response[0])
+        console.log(response[0].productName)
+        if (response.length === 1 && response[0].productName === undefined) {
+          this.list = null
+          return true
+        }
         this.list = response
         console.log('this.list', this.list)
         this.prepareData()
@@ -298,28 +307,36 @@ export default {
       // 去重
       console.log('开始去重')
       const hasItem = new Set()
-      console.log('this.list = ', this.list)
+      const processedList = []
+      const x = this.list
+      console.log('this.list = ', x)
       this.list.forEach(item => {
-        console.log('item = ', item)
-        if (hasItem.has(item)) {
+        console.log('item.productID = ', item.productID)
+        console.log('item.productName = ', item.productName)
+        console.log('item.materialsID.length = ', item.materialsID.length)
+        if (hasItem.has(item.productID)) {
           console.log('has item skip')
           return true
         }
 
         console.log('add item')
-        hasItem.add(item)
+        hasItem.add(item.productID)
+        processedList.push(item)
         console.log('add item completed')
       })
 
       console.log('partly complete, hasItem = ', hasItem)
-      const rawList = Array.from(hasItem)
+      const rawList = processedList
       this.rawList = rawList
       console.log('去重完成')
       console.log('rawList = ', rawList)
 
-      const newList = []
+      for (let i = 0; i < rawList.length; i++) {
+        rawList[i].productionDate = rawList[i].productionDate.substr(0, 10)
+      }
 
       // 根据materialsID展开
+      const newList = []
       let newItem
       rawList.forEach(item => {
         if (item.materialsID.length === 0) {
@@ -359,11 +376,11 @@ export default {
         // 判断条件可以设置成你想合并的列的起始位置
         // 判断条件可以设置成你想合并的行的起始位置
         if (row.materialsID[0] === row.materialID) {
-          console.log('arraySpanMethod, row = ', row)
-          console.log('arraySpanMethod, column = ', column)
-          console.log('arraySpanMethod, rowIndex = ', rowIndex)
-          console.log('arraySpanMethod, columnIndex = ', columnIndex)
-          console.log('arraySpanMethod, rowspan = ', row.materialsID.length)
+          // console.log('arraySpanMethod, row = ', row)
+          // console.log('arraySpanMethod, column = ', column)
+          // console.log('arraySpanMethod, rowIndex = ', rowIndex)
+          // console.log('arraySpanMethod, columnIndex = ', columnIndex)
+          // console.log('arraySpanMethod, rowspan = ', row.materialsID.length)
           return [row.materialsID.length, 1]
         } else {
           return [0, 0]
@@ -371,7 +388,29 @@ export default {
       }
     },
     showTraceChart() {
+      if (this.list === undefined || this.list === null || this.list.length === 0) {
+        this.$message.error('缺少数据')
+        return false
+      }
+
       this.dialogVisible = true
+
+      if (this.hasRendered === true) {
+        console.log('this.hasRendered = ', this.hasRendered)
+        console.log('this.list = ', this.list)
+        console.log('this.list.length = ', this.list.length)
+        return false
+      }
+      // console.log(this.$refs)
+      console.log(this.$refs.traceChart)
+      if (this.$refs.traceChart) {
+        this.$refs.traceChart.runRender()
+      }
+
+      this.hasRendered = true
+      // let refs = this.$refs
+      // console.log(refs.traceChart)
+      // console.log()
     }
   }
 }

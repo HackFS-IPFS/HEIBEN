@@ -30,17 +30,37 @@ export default {
     }
   },
   mounted() {
+    console.log('trace-chart-container mounted')
     this.runRender()
+  },
+  beforeUpdate() {
+    console.log('trace-chart-container before update')
+  },
+  updated() {
+    console.log('trace-chart-container updated')
     // this.drawLine()
   },
   methods: {
-    async runRender() {
-      await this.prepareData()
-      await this.convertData()
-      await this.drawLine()
+    runRender() {
+      if (!this.data) {
+        return false
+      }
+
+      this.graph = {
+        nodes: [],
+        links: []
+      }
+
+      this.nameDataMap = {}
+
+      this.prepareData()
+      this.convertData()
+      this.drawLine()
     },
 
     drawLine() {
+      console.log('drawline started')
+
       var myChart = echarts.init(document.getElementById('trace-chart'))
 
       var option = {
@@ -76,7 +96,7 @@ export default {
             animationDuration: 1500,
             animationEasingUpdate: 'quinticInOut',
 
-            symbolSize: 180,
+            symbolSize: 150,
             // symbol: 'round',
             // symbolSize: [200, 200],
             // symbol: 'roundRect',
@@ -203,32 +223,33 @@ export default {
         ]
       }
       myChart.setOption(option)
+      console.log('drawline ended')
     },
 
     prepareData() {
       console.log('prepareData() started')
-      console.log('prepareData() started')
-      console.log('prepareData() -- this.data = ', this.data)
+      // console.log('prepareData() started')
+      // console.log('prepareData() -- this.data = ', this.data)
 
       this.nameDataMap = new Map()
       this.data.forEach(item => {
-        console.log('item = ', item)
+        // console.log('item = ', item)
         if (this.nameDataMap.has(item.productID)) {
-          console.log('has item')
+          // console.log('has item')
           return true
         }
         this.nameDataMap.set(item.productID, item)
       })
 
-      console.log('prepareData() -- this.data = ', this.data)
-      console.log('prepareData() -- this.nameDataMap = ', this.nameDataMap)
+      // console.log('prepareData() -- this.data = ', this.data)
+      // console.log('prepareData() -- this.nameDataMap = ', this.nameDataMap)
       console.log('prepareData() finished')
     },
 
     convertData() {
       console.log('convertData() started')
-      console.log('convertData() -- this.data = ', this.data)
-      console.log('convertData() -- this.nameDataMap = ', this.nameDataMap)
+      // console.log('convertData() -- this.data = ', this.data)
+      // console.log('convertData() -- this.nameDataMap = ', this.nameDataMap)
       // this.graph.nodes = this.data
 
       // let rootid = 'zcx-test-000'
@@ -242,8 +263,8 @@ export default {
       let firstLoop = true
       waitingRetrieve.push(this.rootid)
       console.log('this.rootid = ', this.rootid)
-      console.log('waitingRetrieve = ', waitingRetrieve)
-      while (waitingRetrieve.length) {
+      // console.log('waitingRetrieve = ', waitingRetrieve)
+      while (waitingRetrieve.length > 0) {
         console.log('===== entering new level =====')
         // console.log('levelCnt = ', levelCnt)
         // let siblingCnt = Math.ceil(waitingRetrieve.length / 2) - 1
@@ -254,11 +275,16 @@ export default {
         console.log('itemName = ', itemName)
 
         if (havingRetrieved.has(itemName)) {
-          return true
+          console.log('havingRetrieved.length = ', havingRetrieved.size)
+          console.log('has item, itemName = ', itemName)
+          console.log('waitingRetrieve[0] = ', waitingRetrieve[0])
+          waitingRetrieve.shift()
+          console.log('waitingRetrieve[0] = ', waitingRetrieve[0])
+          continue
         }
 
         const item = this.nameDataMap.get(itemName)
-        console.log('item = ', item)
+        // console.log('item = ', item)
 
         item.name = item.productID
 
@@ -278,14 +304,16 @@ export default {
         // siblingCnt++
 
         console.log('- after retrieving -')
-        console.log('item = ', item)
-        console.log('this.graph.nodes = ', this.graph.nodes)
-        console.log('havingRetrieved = ', havingRetrieved)
-        console.log('waitingRetrieve = ', waitingRetrieve)
+        // console.log('item = ', item)
+        // console.log('this.graph.nodes = ', this.graph.nodes)
+        // console.log('havingRetrieved = ', havingRetrieved)
+        // console.log('waitingRetrieve = ', waitingRetrieve)
         // console.log('siblingCnt = ', siblingCnt)
 
+        console.log('item.materialsID.length = ', item.materialsID.length)
         item.materialsID.forEach(itemName2 => {
           waitingRetrieve.push(itemName2)
+          console.log('add to waitingRetrieve, itemName2 = ', itemName2)
 
           const obj = {
             source: itemName,
@@ -295,21 +323,22 @@ export default {
 
           if (itemCoordinateMap.has(itemName2) === false) {
             let siblingCnt = levelNodeNumMap.get(item.x)
-            console.log('siblingCnt = ', siblingCnt)
+            // console.log('siblingCnt = ', siblingCnt)
             if (siblingCnt === undefined) {
               siblingCnt = 0
             }
-            console.log('siblingCnt = ', siblingCnt)
+            // console.log('siblingCnt = ', siblingCnt)
             itemCoordinateMap.set(itemName2, [item.x - 1, siblingCnt])
             levelNodeNumMap.set(item.x, siblingCnt + 1)
           }
         })
-        console.log('- after updating links -')
-        console.log('this.graph.links = ', this.graph.links)
-        console.log('waitingRetrieve = ', waitingRetrieve)
+        // console.log('- after updating links -')
+        // console.log('this.graph.links = ', this.graph.links)
+        // console.log('waitingRetrieve = ', waitingRetrieve)
 
         // levelCnt--
         firstLoop = false
+        console.log('waitingRetrieve.length = ', waitingRetrieve.length)
       }
       console.log('convertData() finished')
     }
