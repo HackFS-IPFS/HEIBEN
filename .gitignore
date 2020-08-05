@@ -8,3 +8,6 @@
 frontEnd/node_modules
 .idea/
 venv
+backEnd/__pycache__/
+db/__pycache__/
+ethereum/__pycache__/

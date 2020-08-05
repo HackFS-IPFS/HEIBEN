@@ -42,15 +42,15 @@ module.exports = {
     //     res.redirect(req.originalUrl)
     //   })
     // },
-    proxy: {
-      '/dev-temp-api': {
-        target: 'http://127.0.0.1:5000',
-        ws: true,
-        secure: false,
-        pathRewrite: { '^/dev-temp-api': '' },
-        changeOrigin: true
-      }
-    },
+    // proxy: {
+    //   '/dev-temp-api': {
+    //     target: 'http://127.0.0.1:5000',
+    //     ws: true,
+    //     secure: false,
+    //     pathRewrite: { '^/dev-temp-api': '' },
+    //     changeOrigin: true
+    //   }
+    // },
     before: require('./mock/mock-server.js')
   },
   configureWebpack: {
