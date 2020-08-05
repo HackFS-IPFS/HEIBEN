@@ -37,7 +37,9 @@ def decrypt(text):
 # os.getcwd()
 def get_context():
     cfg = ConfigParser()
-    cfg.read(os.path.dirname(os.getcwd())+"\ethereum\config.ini")
+    curpath = os.path.abspath(os.path.dirname(__file__))
+    #print(curpath[:-5]+"ethereum\config.ini")
+    cfg.read(curpath[:-5]+"ethereum\config.ini")
     os.environ["WEB3_INFURA_PROJECT_ID"] = cfg.get("init", "WEB3_INFURA_PROJECT_ID")
     os.environ["WEB3_INFURA_API_SECRET"] = cfg.get("init", "WEB3_INFURA_API_SECRET")
     os.environ["WEB3_PROVIDER_URI"] = cfg.get("init", "WEB3_PROVIDER_URI")
@@ -73,4 +75,4 @@ def get_compiled_contract():
     return compiled_sol
 
 
-# print(get_compiled_contract())
+print(get_context())
