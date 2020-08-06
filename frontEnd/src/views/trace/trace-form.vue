@@ -4,7 +4,6 @@
       ref="dataForm"
       :rules="rules"
       :model="temp"
-      :v-loading="loading"
       label-position="left"
       label-width="150px"
       style="width: 400px; margin-left:50px;"
@@ -25,7 +24,7 @@
       <span v-for="(item, index) in temp.materialsID" :key="index">
         <el-form-item>
           <span slot="label">Material{{ index+1 }} ID</span>
-          <el-input v-model="temp.materialsID[index]" placeholder="Material ID" />
+          <el-input v-model="temp.materialsID[index]" placeholder="原材料编号" />
           <el-button
             size="mini"
             class="button"
@@ -97,7 +96,6 @@ export default {
       tableKey: 0,
       list: null,
       total: 0,
-      loading: false,
       listLoading: true,
       listQuery: {
         page: 1,
@@ -131,16 +129,16 @@ export default {
       pvData: [],
       rules: {
         productID: [
-          { required: true, message: 'Please input product ID', trigger: 'change' }
+          { required: true, message: '请输入产品ID', trigger: 'change' }
         ],
         productName: [
-          { required: true, message: 'Please input product name', trigger: 'change' }
+          { required: true, message: '请输入产品名称', trigger: 'change' }
         ],
         productionDate: [
-          { required: true, message: 'Please input production date', trigger: 'change' }
+          { required: true, message: '请选择生产日期', trigger: 'change' }
         ],
         companyName: [
-          { required: true, message: 'Please input company name', trigger: 'change' }
+          { required: true, message: '请输入生产厂家', trigger: 'change' }
         ]
       },
       downloadLoading: false
@@ -178,13 +176,9 @@ export default {
       // axios.post('http://127.0.0.1:5000/api/add/', this.temp).then(res => {
       //   console.log(res)
       // })
-      // this.loading = true
-      const loading = this.$loading({
-        lock: true
-      })
+
       createProduct(this.temp).then(() => {
         // this.list.unshift(this.temp)
-        loading.close()
         this.$notify({
           title: 'Success',
           message: 'Created Successfully',
@@ -192,7 +186,6 @@ export default {
           duration: 2000
         })
       })
-      // this.loading = false
 
       // this.$refs['dataForm'].validate(valid => {
       //   if (valid) {
