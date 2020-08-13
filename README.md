@@ -1,13 +1,6 @@
 # HEIBEN
 item traceability system based on ipfs and eth
 ## front-end
-deploy the website:
-```$xslt
-cd frontEnd
-cnpm install
-npm run dev(or "npm run build")
-```
-## back-end
 1. install Solidity(v0.4.25)
 https://www.cnblogs.com/StephenWu/p/6791490.html
 ```
@@ -18,6 +11,7 @@ npm install -g solc@0.4.25
 cd frontEnd
 npm install
 ```
+## back-end
 3. build front end
 ```access transformers
 npm run build:prod
