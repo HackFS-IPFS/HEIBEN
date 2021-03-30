@@ -20,7 +20,7 @@ idna==2.10
 ipfsapi==0.4.4
 ipfshttpclient==0.4.13.2
 itsdangerous==1.1.0
-Jinja2==2.11.2
+Jinja2==2.11.3
 jsonschema==3.2.0
 lru-dict==1.1.6
 MarkupSafe==1.1.1
