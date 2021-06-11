@@ -43,6 +43,6 @@ toolz==0.10.0
 urllib3==1.25.9
 varint==1.0.2
 web3==5.11.1
-websockets==8.1
+websockets==9.1
 Werkzeug==1.0.1
 wincertstore==0.2
