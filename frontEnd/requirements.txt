@@ -27,7 +27,7 @@ MarkupSafe==1.1.1
 multiaddr==0.0.9
 netaddr==0.8.0
 parsimonious==0.8.1
-protobuf==3.12.2
+protobuf==3.15.0
 py-solc==3.2.0
 pycryptodome==3.9.8
 pycurl==7.43.0.5
